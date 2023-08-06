@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from "react-router-dom"
 import {useDispatch, useSelector} from "react-redux"
-import {Form, Button, Row, Col} from 'react-bootstrap'
+import {Form, Button, Row} from 'react-bootstrap'
 import FormContainer from '../FormContainer';
 import { useLoginMutation } from '../../slices/usersApiSlices';
 import { setCredentials } from '../../slices/authSlice';
 import { useEffect } from 'react';
+import { toast } from 'react-toastify'
+import Loader from '../Loader';
 
 
 const LoginScreen = () => {
@@ -34,7 +36,7 @@ const LoginScreen = () => {
             dispatch(setCredentials({ ...res }));
             navigate('/')
         } catch(err) {
-            console.log("Error:", err);
+            toast.error(err?.data?.message || err.error)
 
         }
     }
@@ -59,9 +61,11 @@ const LoginScreen = () => {
                 placeholder='Enter Password'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                autocomplete="current-password"
                 >
                 </Form.Control>
             </Form.Group>
+            {isLoading && <Loader/>}
             <Button
             type='submit' variant='primary' className='mt-3'
             >

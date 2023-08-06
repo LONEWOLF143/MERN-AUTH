@@ -1,17 +1,16 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from "react-router-dom"
-import {Form, Button, Row, Col} from 'react-bootstrap'
+import {Form, Button} from 'react-bootstrap'
 import FormContainer from '../FormContainer';
 import Loader from '../Loader'
 import { useDispatch, useSelector } from 'react-redux';
-import { useRegisterMutation } from '../../slices/usersApiSlices';
 import { setCredentials } from '../../slices/authSlice';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
 
 
 
-const RegisterScreen = () => {
+const ProfileScreen = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -20,15 +19,11 @@ const RegisterScreen = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
   
-    const [register, { isLoading }] = useRegisterMutation();
-  
     const { userInfo } = useSelector((state) => state.auth);
   
     useEffect(() => {
-      if (userInfo) {
-        navigate('/');
-      }
-    }, [navigate, userInfo]);
+      
+    }, []);
   
     const submitHandler = async (e) => {
       e.preventDefault();
@@ -105,4 +100,4 @@ const RegisterScreen = () => {
     );
   };
   
-  export default RegisterScreen;
+  export default ProfileScreen;
