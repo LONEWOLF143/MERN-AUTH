@@ -22,8 +22,10 @@ const ProfileScreen = () => {
     const { userInfo } = useSelector((state) => state.auth);
   
     useEffect(() => {
+        setName(userInfo.name)
+        setEmail(userInfo.email)
       
-    }, []);
+    }, [userInfo]);
   
     const submitHandler = async (e) => {
       e.preventDefault();
@@ -31,18 +33,12 @@ const ProfileScreen = () => {
       if (password !== confirmPassword) {
         toast.error('Passwords do not match');
       } else {
-        try {
-          const res = await register({ name, email, password }).unwrap();
-          dispatch(setCredentials({ ...res }));
-          navigate('/');
-        } catch (err) {
-          toast.error(err?.data?.message || err.error);
-        }
+       console.log('submit')
       }
     };
     return (
       <FormContainer>
-        <h1>Register</h1>
+        <h1>Update Profile</h1>
         <Form onSubmit={submitHandler}>
           <Form.Group className='my-2' controlId='name'>
             <Form.Label>Name</Form.Label>
@@ -85,17 +81,9 @@ const ProfileScreen = () => {
           </Form.Group>
   
           <Button type='submit' variant='primary' className='mt-3'>
-            Register
+            Update
           </Button>
-  
-          {isLoading && <Loader />}
         </Form>
-  
-        <Row className='py-3'>
-          <Col>
-            Already have an account? <Link to={`/login`}>Login</Link>
-          </Col>
-        </Row>
       </FormContainer>
     );
   };
